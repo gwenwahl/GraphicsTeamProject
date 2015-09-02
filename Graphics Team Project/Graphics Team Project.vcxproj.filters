@@ -24,7 +24,7 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Downloads\example2-animation\example2-animation\cs_graphics_setup.h">
+    <ClInclude Include="cs_graphics_setup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Downloads\example2-animation\example2-animation\animation_example.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
