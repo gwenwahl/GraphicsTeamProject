@@ -20,7 +20,7 @@
 #define WINDOW_YS 600
 #define WINDOW_NAME "OpenGL Animation Example"	// Window name
 
-#define ANI_MSEC 10	 // gap between frames
+#define ANI_MSEC 15	 // gap between frames
 
 //@@***********************************************************************************@@
 // Structures
@@ -29,9 +29,25 @@ typedef struct pt
 	GLint x, y;
 }MyPoint;
 
+typedef struct rect {
+	MyPoint ll, ul, lr, ur;
+};
+//Circle Function
+void DrawCircle(float cx, float cy, float r, int num_segments) {
+	glBegin(GL_LINE_LOOP);
+	for (int ii = 0; ii < num_segments; ii++) {
+		float theta = 2.0f * 3.1415926f * float(ii) / float(num_segments);//get the current angle 
+		float x = r * cosf(theta);//calculate the x component 
+		float y = r * sinf(theta);//calculate the y component 
+		glVertex2f(x + cx, y + cy);//output vertex 
+	}
+	glEnd();
+}
+
 //@@***********************************************************************************@@
 // Global Variables
-MyPoint lowerleftred, upperleftred, lowerrightred, upperrightred;
+rect red, orange;
+int degree = 0;
 int go_up = 1;
 
 //@@***********************************************************************************@@
@@ -46,14 +62,27 @@ int main(int argc, char **argv)
 	glutInit(&argc, argv);
 
 	init_setup(WINDOW_XS, WINDOW_YS, WINDOW_NAME);
-	lowerleftred.x = 260;
-	lowerleftred.y = 280;
-	lowerrightred.x = 340;
-	lowerrightred.y = 280;
-	upperleftred.x = 260;
-	upperleftred.y = 320;
-	upperrightred.x = 340;
-	upperrightred.y = 320;
+	
+	//Red Rect Corners
+	red.ll.x = 260;
+	red.ll.y = 280;
+	red.lr.x = 340;
+	red.lr.y = 280;
+	red.ul.x = 260;
+	red.ul.y = 320;
+	red.ur.x = 340;
+	red.ur.y = 320;
+	
+	//Orange Square Corners
+	orange.ll.x = 295;
+	orange.ll.y = 95;
+	orange.lr.x = 305;
+	orange.lr.y = 95;
+	orange.ul.x = 295;
+	orange.ul.y = 105;
+	orange.ur.x = 305;
+	orange.ur.y = 105;
+
 
 	glutDisplayFunc(display_func);
 	glutKeyboardFunc(keyboard_func);
@@ -69,16 +98,37 @@ void display_func(void)
 {
 	glClearColor(1.0, 1.0, 0.87, 1.0);   // background color (white)
 	glClear(GL_COLOR_BUFFER_BIT);       // clearing the buffer not to keep the color
+	
+	//RED RECTANGLE
 	glColor3f(1.0, 0.0, 0.0);
-	glBegin(GL_QUADS);
+	glPushMatrix();
+		glTranslatef(300, 300, 0);
+		glRotatef(degree, 0, 0, 1);
+		glTranslatef(-300, -300, 0);
+		glBegin(GL_QUADS);
+			glVertex2i(red.ll.x, red.ll.y);
+			glVertex2i(red.ul.x, red.ul.y);
+			glVertex2i(red.ur.x, red.ur.y);
+			glVertex2i(red.lr.x, red.lr.y);
+		glEnd();
+	glPopMatrix();
 
-	glVertex2i(lowerleftred.x, lowerleftred.y);
-	glVertex2i(upperleftred.x, upperleftred.y);
-	glVertex2i(upperrightred.x, upperrightred.y);
-	glVertex2i(lowerrightred.x, lowerrightred.y);
-	glEnd();
+	//BLUE CIRCLE
+	glColor3f(0.0, 0.0, 1.0);
+	DrawCircle(300, 300, 200, 5000);
 
-
+	//ORANGE SQUARE
+	glColor3f(1.0, 0.67, 0.0);
+	glPushMatrix();
+		glTranslatef(300, 300, 0);
+		glRotatef(degree, 0, 0, 1);
+		glTranslatef(-300, -300, 0);
+		glBegin(GL_QUADS);
+			glVertex2i(orange.ll.x, orange.ll.y);
+			glVertex2i(orange.ul.x, orange.ul.y);
+			glVertex2i(orange.ur.x, orange.ur.y);
+			glVertex2i(orange.lr.x, orange.lr.y);
+		glEnd();
 
 	glFlush();
 
@@ -89,28 +139,11 @@ void display_func(void)
 	//@@***********************************************************************************@@
 void animation_func(int val)
 {
-	// updating one end point for animation
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//Increment Red Degree
+	degree++;
+	if (degree > 360) {
+		degree = 0;
+	}
 
 	glutPostRedisplay();
 
