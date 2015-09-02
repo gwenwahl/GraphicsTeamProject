@@ -1,9 +1,8 @@
-/*
-*** FILE NAME   : animation_example.c
-*** DESCRIPTION : This program is an example program using OpenGL for animation.
-*** DATE        : May 2012
-*** WRITTEN By  : JKL
-*/
+//Team Project
+//CS 6250
+//Gwen Wahl
+//Sumedha Tiwari
+//Amith Kumar
 
 #include "stdafx.h"
 #include <stdio.h>               // standard C libraries
